@@ -1,24 +1,24 @@
-Attribute VB_Name = "¥æ©ö®i¥Ü"
+Attribute VB_Name = "äº¤æ˜“å±•ç¤º"
 
 Sub cmdForward_Click()
-    ' ½T«O runTime ¤wªì©l¤Æ
+    ' ç¢ºä¿ runTime å·²åˆå§‹åŒ–
     If runTime Is Nothing Then
         Set runTime = New clsPlayTime
-        runTime.Time = Sheets("¬İ½L«Ç").Range("E31").Value
+        runTime.Time = Sheets("çœ‹ç›¤å®¤").Range("E31").Value
     End If
-    ' §ó·s uTime¡A·|¦Û°ÊÄ²µo runTime_Change()
+    ' æ›´æ–° uTimeï¼Œæœƒè‡ªå‹•è§¸ç™¼ runTime_Change()
     Forward
 End Sub
 
 Sub cmdBackward_Click()
 
-    ' ½T«O runTime ¤wªì©l¤Æ
+    ' ç¢ºä¿ runTime å·²åˆå§‹åŒ–
     If runTime Is Nothing Then
         Set runTime = New clsPlayTime
-        runTime.Time = ThisWorkbook.Sheets("¬İ½L«Ç").Range("E31").Value
+        runTime.Time = ThisWorkbook.Sheets("çœ‹ç›¤å®¤").Range("E31").Value
     End If
 
-    ' «á°h¤@¨B
+    ' å¾Œé€€ä¸€æ­¥
     Backward
 
 End Sub
@@ -27,11 +27,11 @@ Sub cmdPlay_Click()
 
     If runTime Is Nothing Then
         Set runTime = New clsPlayTime
-        runTime.Time = ThisWorkbook.Sheets("¬İ½L«Ç").Range("E31").Value
+        runTime.Time = ThisWorkbook.Sheets("çœ‹ç›¤å®¤").Range("E31").Value
     End If
 
-    SimRunning = True                                      ' ±Ò°Ê¼½©ñ
-    TimeRatio = Sheets("¬İ½L«Ç").Range("G32").Value        ' Åª¨ú¼½©ñ³t«×
+    SimRunning = True                                      ' å•Ÿå‹•æ’­æ”¾
+    TimeRatio = Sheets("çœ‹ç›¤å®¤").Range("G32").Value        ' è®€å–æ’­æ”¾é€Ÿåº¦
 
     If TimeRatio < 1 Then TimeRatio = 1
     If TimeRatio > 100 Then TimeRatio = 100
@@ -40,53 +40,55 @@ Sub cmdPlay_Click()
 
 End Sub
 Sub cmdPause_Click()
-    SimRunning = False  ' °±¤î¼½©ñ
+    SimRunning = False  ' åœæ­¢æ’­æ”¾
 End Sub
 
-' ¼Æ¾Ú§ó·s®i¥Ü
+' æ•¸æ“šæ›´æ–°å±•ç¤º
 Sub UpdateDisplay()
 
     Dim wsPrep As Worksheet
     Dim wsView As Worksheet
     Dim lastPrepRow As Long
 
-    Set wsPrep = ThisWorkbook.Sheets("¸ê®Æ¾ã³Æ")
-    Set wsView = ThisWorkbook.Sheets("¬İ½L«Ç")
+    Set wsPrep = ThisWorkbook.Sheets("è³‡æ–™æ•´å‚™")
+    Set wsView = ThisWorkbook.Sheets("çœ‹ç›¤å®¤")
     
-    ' ¥Ø«e®É¶¡
-    CurrentTime = runTime.Time                                     ' ¥Ø«e¼½©ñ®É¶¡
-    CurrentRow = TimeToSeq(CurrentTime) + 3                        ' ¥Ñ®É¶¡´«ºâ¸ê®Æ¾ã³Æ¦C¸¹¡]²Ä4¦C=Seq1¡^
+    ' ç›®å‰æ™‚é–“
+    CurrentTime = runTime.Time                                     ' ç›®å‰æ’­æ”¾æ™‚é–“
+    CurrentRow = TimeToSeq(CurrentTime) + 3                        ' ç”±æ™‚é–“æ›ç®—è³‡æ–™æ•´å‚™åˆ—è™Ÿï¼ˆç¬¬4åˆ—=Seq1ï¼‰
 
-    ' ¨¾§b¡G¦C¸¹¶W¬É«hÂ÷¶}
-    lastPrepRow = wsPrep.Cells(wsPrep.RowS.Count, 2).End(xlUp).row ' ¸ê®Æ¾ã³ÆBÄæ³Ì«á¦C
+    ' é˜²å‘†ï¼šåˆ—è™Ÿè¶…ç•Œå‰‡é›¢é–‹
+    lastPrepRow = wsPrep.Cells(wsPrep.RowS.Count, 2).End(xlUp).row ' è³‡æ–™æ•´å‚™Bæ¬„æœ€å¾Œåˆ—
     If CurrentRow < 4 Or CurrentRow > lastPrepRow Then Exit Sub
 
-
-    ' ==================== §ó·s­ÓªÑ²{³f¸ê®Æ (Row 2) ====================
-    wsView.Cells(2, 2).Value = wsPrep.Cells(CurrentRow, 5).Value          ' EÄæ = ²{³f¦¨¥æ»ù
-    wsView.Cells(2, 15).Value = wsPrep.Cells(CurrentRow, 4).Value         ' DÄæ = ²{³f¦¨¥æ®É¶¡
-    wsView.Cells(2, 9).Value = wsPrep.Cells(CurrentRow, 6).Value          ' FÄæ = ²{³f³æ¶q
-    wsView.Cells(2, 10).Value = wsPrep.Cells(CurrentRow, 11).Value        ' KÄæ = ²{³f²Ö­p¶q
+    Application.EnableEvents = False
+    ' ==================== æ›´æ–°å€‹è‚¡ç¾è²¨è³‡æ–™ (Row 2) ====================
+    wsView.Cells(2, 2).Value = wsPrep.Cells(CurrentRow, 5).Value          ' Eæ¬„ = ç¾è²¨æˆäº¤åƒ¹
+    wsView.Cells(2, 15).Value = wsPrep.Cells(CurrentRow, 4).Value         ' Dæ¬„ = ç¾è²¨æˆäº¤æ™‚é–“
+    wsView.Cells(2, 9).Value = wsPrep.Cells(CurrentRow, 6).Value          ' Fæ¬„ = ç¾è²¨å–®é‡
+    wsView.Cells(2, 10).Value = wsPrep.Cells(CurrentRow, 11).Value        ' Kæ¬„ = ç¾è²¨ç´¯è¨ˆé‡
     wsView.Cells(2, 5).Resize(1, 4).Value = _
-        wsPrep.Cells(CurrentRow, 7).Resize(1, 4).Value                    ' G:J = ²{³f©e¶R¶q/¶R»ù/½æ»ù/©e½æ¶q
+        wsPrep.Cells(CurrentRow, 7).Resize(1, 4).Value                    ' G:J = ç¾è²¨å§”è²·é‡/è²·åƒ¹/è³£åƒ¹/å§”è³£é‡
 
-    ' ==================== §ó·s´Á³f¸ê®Æ (Row 3) ====================
-    wsView.Cells(3, 2).Value = wsPrep.Cells(CurrentRow, 15).Value         ' OÄæ = ´Á³f¦¨¥æ»ù
-    wsView.Cells(3, 15).Value = wsPrep.Cells(CurrentRow, 14).Value        ' NÄæ = ´Á³f¦¨¥æ®É¶¡
-    wsView.Cells(3, 9).Value = wsPrep.Cells(CurrentRow, 16).Value         ' PÄæ = ´Á³f³æ¶q
-    wsView.Cells(3, 10).Value = wsPrep.Cells(CurrentRow, 21).Value        ' UÄæ = ´Á³f²Ö­p¶q
+    ' ==================== æ›´æ–°æœŸè²¨è³‡æ–™ (Row 3) ====================
+    wsView.Cells(3, 2).Value = wsPrep.Cells(CurrentRow, 15).Value         ' Oæ¬„ = æœŸè²¨æˆäº¤åƒ¹
+    wsView.Cells(3, 15).Value = wsPrep.Cells(CurrentRow, 14).Value        ' Næ¬„ = æœŸè²¨æˆäº¤æ™‚é–“
+    wsView.Cells(3, 9).Value = wsPrep.Cells(CurrentRow, 16).Value         ' Pæ¬„ = æœŸè²¨å–®é‡
+    wsView.Cells(3, 10).Value = wsPrep.Cells(CurrentRow, 21).Value        ' Uæ¬„ = æœŸè²¨ç´¯è¨ˆé‡
     wsView.Cells(3, 5).Resize(1, 4).Value = _
-        wsPrep.Cells(CurrentRow, 17).Resize(1, 4).Value                   ' Q:T = ´Á³f©e¶R¶q/¶R»ù/½æ»ù/©e½æ¶q
+        wsPrep.Cells(CurrentRow, 17).Resize(1, 4).Value                   ' Q:T = æœŸè²¨å§”è²·é‡/è²·åƒ¹/è³£åƒ¹/å§”è³£é‡
 
-    ' ==================== §ó·s¤p«¬´Á³f¸ê®Æ (Row 4) ====================
-    wsView.Cells(4, 2).Value = wsPrep.Cells(CurrentRow, 25).Value         ' YÄæ = ¤p«¬´Á³f¦¨¥æ»ù
-    wsView.Cells(4, 15).Value = wsPrep.Cells(CurrentRow, 24).Value        ' XÄæ = ¤p«¬´Á³f¦¨¥æ®É¶¡
-    wsView.Cells(4, 9).Value = wsPrep.Cells(CurrentRow, 26).Value         ' ZÄæ = ¤p«¬´Á³f³æ¶q
-    wsView.Cells(4, 10).Value = wsPrep.Cells(CurrentRow, 31).Value        ' AEÄæ = ¤p«¬´Á³f²Ö­p¶q
+    ' ==================== æ›´æ–°å°å‹æœŸè²¨è³‡æ–™ (Row 4) ====================
+    wsView.Cells(4, 2).Value = wsPrep.Cells(CurrentRow, 25).Value         ' Yæ¬„ = å°å‹æœŸè²¨æˆäº¤åƒ¹
+    wsView.Cells(4, 15).Value = wsPrep.Cells(CurrentRow, 24).Value        ' Xæ¬„ = å°å‹æœŸè²¨æˆäº¤æ™‚é–“
+    wsView.Cells(4, 9).Value = wsPrep.Cells(CurrentRow, 26).Value         ' Zæ¬„ = å°å‹æœŸè²¨å–®é‡
+    wsView.Cells(4, 10).Value = wsPrep.Cells(CurrentRow, 31).Value        ' AEæ¬„ = å°å‹æœŸè²¨ç´¯è¨ˆé‡
     wsView.Cells(4, 5).Resize(1, 4).Value = _
-        wsPrep.Cells(CurrentRow, 27).Resize(1, 4).Value                   ' AA:AD = ¤p«¬´Á³f©e¶R¶q/¶R»ù/½æ»ù/©e½æ¶q
-    wsView.Cells(6, 3).Value = runTime.Time                               'Åã¥Ü«ü©w®É¶¡
-    wsView.Cells(6, 4).Value = TimeToSeq(runTime.Time) + 3                'Åã¥Ü¾ã³Æ¸ê®Æ¦C¸¹
+        wsPrep.Cells(CurrentRow, 27).Resize(1, 4).Value                   ' AA:AD = å°å‹æœŸè²¨å§”è²·é‡/è²·åƒ¹/è³£åƒ¹/å§”è³£é‡
+    wsView.Cells(6, 3).Value = runTime.Time                               'é¡¯ç¤ºæŒ‡å®šæ™‚é–“
+    wsView.Cells(6, 4).Value = TimeToSeq(runTime.Time) + 3                'é¡¯ç¤ºæ•´å‚™è³‡æ–™åˆ—è™Ÿ
+
+    Application.EnableEvents = True
     
 End Sub
 
@@ -94,23 +96,23 @@ End Sub
 Function FindLastRow(ws As Worksheet, startRow As Integer, col As Integer, CurrentTime As Long) As Long
     Dim h As Long, m As Long
     
-    ' ³]©w·j´M½d³ò
-    h = ws.Cells(ws.RowS.Count, col).End(xlUp).row ' §ä¨ì³Ì«á¤@¦C
+    ' è¨­å®šæœå°‹ç¯„åœ
+    h = ws.Cells(ws.RowS.Count, col).End(xlUp).row ' æ‰¾åˆ°æœ€å¾Œä¸€åˆ—
     
-    ' °õ¦æ¤G¤À·j´M
+    ' åŸ·è¡ŒäºŒåˆ†æœå°‹
     Do While h - startRow > 1
         m = (startRow + h) \ 2
         If ws.Cells(m, col).Value = CurrentTime Then
             FindLastRow = m
             Exit Function
         ElseIf ws.Cells(m, col).Value < CurrentTime Then
-            startRow = m ' ÁY¤p·j´M½d³ò¨ì M-H
+            startRow = m ' ç¸®å°æœå°‹ç¯„åœåˆ° M-H
         Else
-            h = m ' ÁY¤p·j´M½d³ò¨ì L-M
+            h = m ' ç¸®å°æœå°‹ç¯„åœåˆ° L-M
         End If
     Loop
     
-    ' ¥u¦³ 1 ©Î 2 ¦æ®É¡Aª½±µ¨M©wµ²ªG
+    ' åªæœ‰ 1 æˆ– 2 è¡Œæ™‚ï¼Œç›´æ¥æ±ºå®šçµæœ
     If ws.Cells(h, col).Value <= CurrentTime Then
         FindLastRow = h
     Else
@@ -118,22 +120,22 @@ Function FindLastRow(ws As Worksheet, startRow As Integer, col As Integer, Curre
     End If
 End Function
 
-' uTime «e¶i (¼W¥[ OneStep)
+' uTime å‰é€² (å¢åŠ  OneStep)
 Public Sub Forward()
     Dim h As Integer, m As Integer, s As Integer
-    Dim tempTime As Double ' Á×§K·¸¦ì¡A¨Ï¥Î `Double` ¨Ó¦sÀx®É¶¡
+    Dim tempTime As Double ' é¿å…æº¢ä½ï¼Œä½¿ç”¨ `Double` ä¾†å­˜å„²æ™‚é–“
     
-    ' ¸ÑªR·í«e®É¶¡®æ¦¡ (hhmmss)
-    h = runTime.Time \ 10000          ' ¨ú±o¤p®É (hh)
-    m = (runTime.Time Mod 10000) \ 100 ' ¨ú±o¤ÀÄÁ (mm)
-    s = runTime.Time Mod 100           ' ¨ú±o¬í¼Æ (ss)
+    ' è§£æç•¶å‰æ™‚é–“æ ¼å¼ (hhmmss)
+    h = runTime.Time \ 10000          ' å–å¾—å°æ™‚ (hh)
+    m = (runTime.Time Mod 10000) \ 100 ' å–å¾—åˆ†é˜ (mm)
+    s = runTime.Time Mod 100           ' å–å¾—ç§’æ•¸ (ss)
 
-    ' ¼W¥[¬í¼Æ
-    OneStep = Sheets("¬İ½L«Ç").Range("Onestep").Value
+    ' å¢åŠ ç§’æ•¸
+    OneStep = Sheets("çœ‹ç›¤å®¤").Range("Onestep").Value
     If OneStep < 1 Then OneStep = 1
     s = s + OneStep
 
-    ' ¶i¦ì³B²z (¬í ¡÷ ¤À ¡÷ ®É)
+    ' é€²ä½è™•ç† (ç§’ â†’ åˆ† â†’ æ™‚)
     If s >= 60 Then
         s = s - 60
         m = m + 1
@@ -144,42 +146,42 @@ Public Sub Forward()
         h = h + 1
     End If
 
-    ' ³z¹L TimeSerial ½T«O®É¶¡®æ¦¡¥¿½T
-    tempTime = TimeSerial(h, m, s) ' VBA ¤º«Øªº®É¶¡¨ç¼Æ¡AÁ×§K·¸¦ì
+    ' é€é TimeSerial ç¢ºä¿æ™‚é–“æ ¼å¼æ­£ç¢º
+    tempTime = TimeSerial(h, m, s) ' VBA å…§å»ºçš„æ™‚é–“å‡½æ•¸ï¼Œé¿å…æº¢ä½
 
-    ' Âà¦^ hhmmss ®æ¦¡
+    ' è½‰å› hhmmss æ ¼å¼
     runTime.Time = Hour(tempTime) * 10000 + Minute(tempTime) * 100 + Second(tempTime)
 
-    ' ½T«O®É¶¡¤£¶W¹L `fTimeEnd`
+    ' ç¢ºä¿æ™‚é–“ä¸è¶…é `fTimeEnd`
     If runTime.Time > fTimeEnd Then runTime.Time = fTimeEnd
 
 End Sub
 
-' uTime «á°h (´î¤Ö OneStep)
+' uTime å¾Œé€€ (æ¸›å°‘ OneStep)
 Public Sub Backward()
 
     Dim h As Integer, m As Integer, s As Integer
     Dim tempTime As Double
 
-    ' ¨C¦¸­«Åª¨Bªø
-    OneStep = ThisWorkbook.Sheets("¬İ½L«Ç").Range("OneStep").Value
+    ' æ¯æ¬¡é‡è®€æ­¥é•·
+    OneStep = ThisWorkbook.Sheets("çœ‹ç›¤å®¤").Range("OneStep").Value
     If OneStep < 1 Then OneStep = 1
 
-    ' ¤w¨ì°_©l®É¶¡´N¤£¦A«á°h
+    ' å·²åˆ°èµ·å§‹æ™‚é–“å°±ä¸å†å¾Œé€€
     If runTime.Time <= TrialDealTime Then
         runTime.Time = TrialDealTime
         Exit Sub
     End If
 
-    ' ¸ÑªR¥Ø«e®É¶¡®æ¦¡ (hhmmss)
+    ' è§£æç›®å‰æ™‚é–“æ ¼å¼ (hhmmss)
     h = runTime.Time \ 10000
     m = (runTime.Time Mod 10000) \ 100
     s = runTime.Time Mod 100
 
-    ' ´î¤Ö¬í¼Æ
+    ' æ¸›å°‘ç§’æ•¸
     s = s - OneStep
 
-    ' ­É¦ì³B²z
+    ' å€Ÿä½è™•ç†
     Do While s < 0
         s = s + 60
         m = m - 1
@@ -190,13 +192,13 @@ Public Sub Backward()
         h = h - 1
     Loop
 
-    ' ¥Î TimeSerial ½T«O®É¶¡¦Xªk
+    ' ç”¨ TimeSerial ç¢ºä¿æ™‚é–“åˆæ³•
     tempTime = TimeSerial(h, m, s)
 
-    ' ¼g¦^ runTime¡A¨ÃÄ²µoµe­±§ó·s
+    ' å¯«å› runTimeï¼Œä¸¦è§¸ç™¼ç•«é¢æ›´æ–°
     runTime.Time = Hour(tempTime) * 10000 + Minute(tempTime) * 100 + Second(tempTime)
 
-    ' ¤U­­«OÅ@
+    ' ä¸‹é™ä¿è­·
     If runTime.Time < TrialDealTime Then runTime.Time = TrialDealTime
 
 End Sub
@@ -207,46 +209,46 @@ Sub RunSimulationLoop()
     Dim tempTime As Double
     Dim h As Integer, m As Integer, s As Integer
     
-    nextRun = Timer + 1 / TimeRatio                             ' ¨Ì¼½©ñ³t«×³]©w¤U¦¸°õ¦æ®É¶¡
+    nextRun = Timer + 1 / TimeRatio                             ' ä¾æ’­æ”¾é€Ÿåº¦è¨­å®šä¸‹æ¬¡åŸ·è¡Œæ™‚é–“
 
     Do While SimRunning
 
-        ' ¨ì¦¬½L®É¶¡§Y°±¤î
+        ' åˆ°æ”¶ç›¤æ™‚é–“å³åœæ­¢
         If runTime.Time >= fTimeEnd Then
             SimRunning = False
             Exit Do
         End If
 
-        ' ¸ÑªR¥Ø«e®É¶¡ hhmmss
+        ' è§£æç›®å‰æ™‚é–“ hhmmss
         h = runTime.Time \ 10000
         m = (runTime.Time Mod 10000) \ 100
         s = runTime.Time Mod 100
 
-        ' «e¶i 1 ¬í
+        ' å‰é€² 1 ç§’
         s = s + 1
 
-        ' ¬í¶i¦ì
+        ' ç§’é€²ä½
         If s >= 60 Then
             s = s - 60
             m = m + 1
         End If
 
-        ' ¤À¶i¦ì
+        ' åˆ†é€²ä½
         If m >= 60 Then
             m = 0
             h = h + 1
         End If
 
-        ' ¥Î TimeSerial ½T«O®É¶¡¦Xªk
+        ' ç”¨ TimeSerial ç¢ºä¿æ™‚é–“åˆæ³•
         tempTime = TimeSerial(h, m, s)
 
-        ' ¼g¦^ runTime¡A¨ÃÄ²µoµe­±§ó·s
+        ' å¯«å› runTimeï¼Œä¸¦è§¸ç™¼ç•«é¢æ›´æ–°
         runTime.Time = Hour(tempTime) * 10000 + Minute(tempTime) * 100 + Second(tempTime)
 
-        ' ¤¹³\ UI §ó·s
+        ' å…è¨± UI æ›´æ–°
         DoEvents
 
-        ' ±±¨î¼½©ñ³t«×
+        ' æ§åˆ¶æ’­æ”¾é€Ÿåº¦
         Do While Timer < nextRun
             DoEvents
         Loop
@@ -271,46 +273,46 @@ Sub CreateOrUpdateChart()
     Dim rawAnchorRow As Long
     Dim startRawRow As Long, lastRawRow As Long
 
-    Set wsView = ThisWorkbook.Sheets("¬İ½L«Ç")
-    Set wsPrep = ThisWorkbook.Sheets("¸ê®Æ¾ã³Æ")
-    Set wsRaw = ThisWorkbook.Sheets("­ì¸ê®Æ")
+    Set wsView = ThisWorkbook.Sheets("çœ‹ç›¤å®¤")
+    Set wsPrep = ThisWorkbook.Sheets("è³‡æ–™æ•´å‚™")
+    Set wsRaw = ThisWorkbook.Sheets("åŸè³‡æ–™")
     
     chartName = "Chart_BS_Q"
     
-    ' ¥Ñ¥Ø«e¼½©ñ®É¶¡´«ºâ¸ê®Æ¾ã³Æ©Ò¦b¦C
-    CurrentRow = TimeToSeq(runTime.Time) + 3                           ' ²Ä4¦C = Seq1
+    ' ç”±ç›®å‰æ’­æ”¾æ™‚é–“æ›ç®—è³‡æ–™æ•´å‚™æ‰€åœ¨åˆ—
+    CurrentRow = TimeToSeq(runTime.Time) + 3                           ' ç¬¬4åˆ— = Seq1
     prepRow = CurrentRow
     
-    ' ½T«O¸ê®Æ¾ã³Æ¦³¨¬°÷¼Æ¾Ú
+    ' ç¢ºä¿è³‡æ–™æ•´å‚™æœ‰è¶³å¤ æ•¸æ“š
     If prepRow < 4 Then Exit Sub
     
-    ' ±q¸ê®Æ¾ã³Æ C Äæ¨ú¥X¹ïÀ³ªº­ì¸ê®Æ¦C¸¹
-    rawAnchorRow = Val(wsPrep.Cells(prepRow, 3).Value)                 ' CÄæ = ²{³f¹ïÀ³­ì¸ê®Æ¦C¸¹
+    ' å¾è³‡æ–™æ•´å‚™ C æ¬„å–å‡ºå°æ‡‰çš„åŸè³‡æ–™åˆ—è™Ÿ
+    rawAnchorRow = Val(wsPrep.Cells(prepRow, 3).Value)                 ' Cæ¬„ = ç¾è²¨å°æ‡‰åŸè³‡æ–™åˆ—è™Ÿ
     If rawAnchorRow < 6 Then Exit Sub
 
-    ' ³]©wÅã¥Ü½d³ò¡G­ì¸ê®Æ©¹¤W§t·í«e¦@ 50 µ§¨Æ¥ó¦C
-    startRawRow = Application.Max(6, rawAnchorRow - 49)               ' ³Ì¦­¤£¯à¦­©ó²Ä6¦C
-    lastRawRow = rawAnchorRow                                          ' ¥Ø«e¹ïÀ³ªº­ì¸ê®Æ¦C
+    ' è¨­å®šé¡¯ç¤ºç¯„åœï¼šåŸè³‡æ–™å¾€ä¸Šå«ç•¶å‰å…± 50 ç­†äº‹ä»¶åˆ—
+    startRawRow = Application.Max(6, rawAnchorRow - 49)               ' æœ€æ—©ä¸èƒ½æ—©æ–¼ç¬¬6åˆ—
+    lastRawRow = rawAnchorRow                                          ' ç›®å‰å°æ‡‰çš„åŸè³‡æ–™åˆ—
 
-    ' ³]©w¼Æ¾Ú½d³ò¡]²{³f­ì¸ê®Æ¡^
-    Set rngX = wsRaw.Range("B" & startRawRow & ":B" & lastRawRow)     ' BÄæ = ­ì¸ê®Æ®É¶¡
-    Set rngBuy = wsRaw.Range("E" & startRawRow & ":E" & lastRawRow)   ' EÄæ = ©e¶R¶q
-    Set rngSell = wsRaw.Range("H" & startRawRow & ":H" & lastRawRow)  ' HÄæ = ©e½æ¶q
+    ' è¨­å®šæ•¸æ“šç¯„åœï¼ˆç¾è²¨åŸè³‡æ–™ï¼‰
+    Set rngX = wsRaw.Range("B" & startRawRow & ":B" & lastRawRow)     ' Bæ¬„ = åŸè³‡æ–™æ™‚é–“
+    Set rngBuy = wsRaw.Range("E" & startRawRow & ":E" & lastRawRow)   ' Eæ¬„ = å§”è²·é‡
+    Set rngSell = wsRaw.Range("H" & startRawRow & ":H" & lastRawRow)  ' Hæ¬„ = å§”è³£é‡
 
-    ' ªÑ²¼¦WºÙ¡]Åã¥Ü©ó¹Ïªí¼ĞÃD¡^
-    stockName = wsView.Cells(2, 1).Value                               ' ¬İ½L«Ç A2 = ²{³f¦WºÙ
+    ' è‚¡ç¥¨åç¨±ï¼ˆé¡¯ç¤ºæ–¼åœ–è¡¨æ¨™é¡Œï¼‰
+    stockName = wsView.Cells(2, 1).Value                               ' çœ‹ç›¤å®¤ A2 = ç¾è²¨åç¨±
     
-    ' ¨ú±o³Ì·sªº©e¶R / ©e½æ»ù®æ»P¼Æ¶q¡]­ì¸ê®Æ¡^
-    buyPrice = wsRaw.Cells(lastRawRow, 6).Value                        ' FÄæ = ¶R»ù
-    buyQty = wsRaw.Cells(lastRawRow, 5).Value                          ' EÄæ = ©e¶R¶q
-    sellPrice = wsRaw.Cells(lastRawRow, 7).Value                       ' GÄæ = ½æ»ù
-    sellQty = wsRaw.Cells(lastRawRow, 8).Value                         ' HÄæ = ©e½æ¶q
+    ' å–å¾—æœ€æ–°çš„å§”è²· / å§”è³£åƒ¹æ ¼èˆ‡æ•¸é‡ï¼ˆåŸè³‡æ–™ï¼‰
+    buyPrice = wsRaw.Cells(lastRawRow, 6).Value                        ' Fæ¬„ = è²·åƒ¹
+    buyQty = wsRaw.Cells(lastRawRow, 5).Value                          ' Eæ¬„ = å§”è²·é‡
+    sellPrice = wsRaw.Cells(lastRawRow, 7).Value                       ' Gæ¬„ = è³£åƒ¹
+    sellQty = wsRaw.Cells(lastRawRow, 8).Value                         ' Hæ¬„ = å§”è³£é‡
 
-    ' ÀË¬d¹Ïªí¬O§_¤w¦s¦b
+    ' æª¢æŸ¥åœ–è¡¨æ˜¯å¦å·²å­˜åœ¨
     For Each cht In wsView.ChartObjects
         If cht.Name = chartName Then
             
-            ' ¹Ïªí¤w¦s¦b¡Gª½±µ§ó·s¼Æ¾Ú½d³ò»P¼Ğ¥Ü
+            ' åœ–è¡¨å·²å­˜åœ¨ï¼šç›´æ¥æ›´æ–°æ•¸æ“šç¯„åœèˆ‡æ¨™ç¤º
             With cht.Chart
                 .SeriesCollection(1).XValues = rngX
                 .SeriesCollection(1).Values = rngBuy
@@ -318,96 +320,96 @@ Sub CreateOrUpdateChart()
                 .SeriesCollection(2).Values = rngSell
                 
                 .ChartTitle.Text = stockName
-                .SeriesCollection(1).Name = "¶R " & buyPrice & " / " & buyQty
-                .SeriesCollection(2).Name = "½æ " & sellPrice & " / " & sellQty
+                .SeriesCollection(1).Name = "è²· " & buyPrice & " / " & buyQty
+                .SeriesCollection(2).Name = "è³£ " & sellPrice & " / " & sellQty
             End With
             
             Exit Sub
         End If
     Next cht
 
-    ' ­Y¹Ïªí¤£¦s¦b¡A«h·s«Ø¹Ïªí
+    ' è‹¥åœ–è¡¨ä¸å­˜åœ¨ï¼Œå‰‡æ–°å»ºåœ–è¡¨
     Set cht = wsView.ChartObjects.Add(Left:=15, Top:=200, Width:=350, Height:=240)
     cht.Name = chartName
     cht.Chart.SetSourceData Source:=rngBuy
 
-    ' ³]©w¹ÏªíÃş«¬¬°§é½u¹Ï
+    ' è¨­å®šåœ–è¡¨é¡å‹ç‚ºæŠ˜ç·šåœ–
     With cht.Chart
         .ChartType = xlLine
         .HasTitle = True
         .ChartTitle.Text = stockName
         
-        ' X ¶b¤£Åã¥Ü
+        ' X è»¸ä¸é¡¯ç¤º
         .Axes(xlCategory).HasTitle = False
         .Axes(xlCategory).TickLabels.NumberFormat = " "
         .Axes(xlCategory).Format.Line.Visible = msoFalse
         
-        ' Y ¶b¤£Åã¥Ü¼ĞÃD
+        ' Y è»¸ä¸é¡¯ç¤ºæ¨™é¡Œ
         .Axes(xlValue).HasTitle = False
         
-        ' Y ¶b¤å¦rÃC¦â
+        ' Y è»¸æ–‡å­—é¡è‰²
         .Axes(xlValue).TickLabels.Font.Color = RGB(255, 255, 255)
         
-        ' ­I´º»PÃ¸¹Ï°ÏÃC¦â
+        ' èƒŒæ™¯èˆ‡ç¹ªåœ–å€é¡è‰²
         .ChartArea.Format.Fill.ForeColor.RGB = RGB(0, 0, 0)
         .PlotArea.Format.Fill.ForeColor.RGB = RGB(64, 64, 64)
         
         .ChartTitle.Format.TextFrame2.TextRange.Font.Size = 16
         .ChartTitle.Format.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255)
         
-        ' ²¾°£¦Û°Ê²£¥Íªº¼Æ¦C
+        ' ç§»é™¤è‡ªå‹•ç”¢ç”Ÿçš„æ•¸åˆ—
         On Error Resume Next
         .SeriesCollection(1).Delete
         On Error GoTo 0
 
-        ' ³]©w¶R¤è¼Æ¦C¡]¬õ¦â¡^
+        ' è¨­å®šè²·æ–¹æ•¸åˆ—ï¼ˆç´…è‰²ï¼‰
         With .SeriesCollection.NewSeries
             .XValues = rngX
             .Values = rngBuy
-            .Name = "¶R " & buyPrice & " / " & buyQty
+            .Name = "è²· " & buyPrice & " / " & buyQty
             .Border.Color = RGB(255, 0, 0)
             .MarkerStyle = xlNone
         End With
 
-        ' ³]©w½æ¤è¼Æ¦C¡]ºñ¦â¡^
+        ' è¨­å®šè³£æ–¹æ•¸åˆ—ï¼ˆç¶ è‰²ï¼‰
         With .SeriesCollection.NewSeries
             .XValues = rngX
             .Values = rngSell
-            .Name = "½æ " & sellPrice & " / " & sellQty
+            .Name = "è³£ " & sellPrice & " / " & sellQty
             .Border.Color = RGB(0, 128, 0)
             .MarkerStyle = xlNone
         End With
     End With
 
-    ' ½Õ¾ã¹Ïªí¤j¤p
+    ' èª¿æ•´åœ–è¡¨å¤§å°
     With wsView.Shapes(chartName)
         .ScaleWidth 1.3, msoFalse, msoScaleFromTopLeft
         .ScaleHeight 1.3, msoFalse, msoScaleFromTopLeft
     End With
     
-    ' ½Õ¾ã¼ĞÃD¦rÅé»P¦ì¸m
+    ' èª¿æ•´æ¨™é¡Œå­—é«”èˆ‡ä½ç½®
     With cht.Chart.ChartTitle
         .Format.TextFrame2.TextRange.Font.Size = 11
         .Left = 3
         .Top = 5
     End With
     
-    ' ½Õ¾ã¹Ï¨Ò¦ì¸m
+    ' èª¿æ•´åœ–ä¾‹ä½ç½®
     With cht.Chart.Legend
         .Left = 200
         .Top = 1
     End With
     
-    ' ½Õ¾ãÃ¸¹Ï°Ï¤j¤p
+    ' èª¿æ•´ç¹ªåœ–å€å¤§å°
     With cht.Chart.PlotArea
         .Width = .Width * 1.3
         .Height = .Height * 1.5
     End With
     
-    ' ¦A¦¸½Õ¾ã¼ĞÃD¦r«¬¤j¤p
+    ' å†æ¬¡èª¿æ•´æ¨™é¡Œå­—å‹å¤§å°
     cht.Chart.ChartTitle.Format.TextFrame2.TextRange.Font.Size = 14
     
-    ' ¹Ï¨Ò¤å¦rÃC¦â»P¤j¤p
+    ' åœ–ä¾‹æ–‡å­—é¡è‰²èˆ‡å¤§å°
     If cht.Chart.HasLegend Then
         Dim legendEntry As Object
         For Each legendEntry In cht.Chart.Legend.LegendEntries
@@ -429,38 +431,38 @@ Sub CreateJiangBoChart(NowTime As Long)
     Dim chartName As String
     Dim hh As Long, mm As Long, ss As Long
     
-    ' ¦WºÙ³]©w
-    Set ws = ThisWorkbook.Sheets("­ì¸ê®Æ")
-    Set wsView = ThisWorkbook.Sheets("¬İ½L«Ç")
+    ' åç¨±è¨­å®š
+    Set ws = ThisWorkbook.Sheets("åŸè³‡æ–™")
+    Set wsView = ThisWorkbook.Sheets("çœ‹ç›¤å®¤")
     chartName = "JiangBoChart"
 
-    ' §ä¨ì³Ì«á¤@µ§¦¿ªi¹Ï¸ê®Æ
-    lastRow = ws.Cells(ws.RowS.Count, 41).End(xlUp).row   ' AOÄæ = ®É¶¡
-    lastRow = lastRow + 1                                 ' ¦h¯d¤@¦C¨Ñ¦¨¥æ¶qÁY©ñ°Ñ¦Ò
+    ' æ‰¾åˆ°æœ€å¾Œä¸€ç­†æ±Ÿæ³¢åœ–è³‡æ–™
+    lastRow = ws.Cells(ws.RowS.Count, 41).End(xlUp).row   ' AOæ¬„ = æ™‚é–“
+    lastRow = lastRow + 1                                 ' å¤šç•™ä¸€åˆ—ä¾›æˆäº¤é‡ç¸®æ”¾åƒè€ƒ
 
-    ' ¥Ñ NowTime ª½±µ­pºâ ToRow¡]09:00:00 °_¨C JiangBoStepSec ¬í 1 µ§¡AAO3 ¬°²Ä1µ§¡^
+    ' ç”± NowTime ç›´æ¥è¨ˆç®— ToRowï¼ˆ09:00:00 èµ·æ¯ JiangBoStepSec ç§’ 1 ç­†ï¼ŒAO3 ç‚ºç¬¬1ç­†ï¼‰
     hh = NowTime \ 10000
     mm = (NowTime \ 100) Mod 100
     ss = NowTime Mod 100
 
     ToRow = ((hh - 9) * 3600 + mm * 60 + ss) \ JiangBoStepSec + 3
 
-    ' ¨¾§b¡G­­¨î ToRow ½d³ò
+    ' é˜²å‘†ï¼šé™åˆ¶ ToRow ç¯„åœ
     If ToRow < 3 Then ToRow = 3
     If ToRow > lastRow Then ToRow = lastRow
 
-    ' ¤@¦¸©Ê§å¶qÂà¶K­È
+    ' ä¸€æ¬¡æ€§æ‰¹é‡è½‰è²¼å€¼
     ws.Range("AR3:AS" & lastRow).ClearContents
-    ws.Range("AR3:AR" & ToRow).Value = ws.Range("AP3:AP" & ToRow).Value   ' AR = ¦¨¥æ»ùÅã¥Ü
-    ws.Range("AS3:AS" & ToRow).Value = ws.Range("AQ3:AQ" & ToRow).Value   ' AS = °Ï¶¡¦¨¥æ¶qÅã¥Ü
+    ws.Range("AR3:AR" & ToRow).Value = ws.Range("AP3:AP" & ToRow).Value   ' AR = æˆäº¤åƒ¹é¡¯ç¤º
+    ws.Range("AS3:AS" & ToRow).Value = ws.Range("AQ3:AQ" & ToRow).Value   ' AS = å€é–“æˆäº¤é‡é¡¯ç¤º
     
     Application.CutCopyMode = False
 
-    ' ³]©w¦¨¥æ¶q³Ì¤j­È
+    ' è¨­å®šæˆäº¤é‡æœ€å¤§å€¼
     maxVol = Application.WorksheetFunction.Max(ws.Range("AQ3:AQ" & lastRow))
     maxVol = maxVol * 1.5
 
-    ' ¦pªG¹Ïªí¤w¦s¦b¡Aª½±µ§ó·s¼Æ¦C
+    ' å¦‚æœåœ–è¡¨å·²å­˜åœ¨ï¼Œç›´æ¥æ›´æ–°æ•¸åˆ—
     For Each cht In wsView.ChartObjects
         If cht.Name = chartName Then
             With cht.Chart
@@ -473,27 +475,27 @@ Sub CreateJiangBoChart(NowTime As Long)
         End If
     Next cht
 
-    ' ³]©w¼Æ¾Ú½d³ò
+    ' è¨­å®šæ•¸æ“šç¯„åœ
     Set rngTime = ws.Range("AO3:AO" & lastRow)
     Set rngPrice = ws.Range("AR3:AR" & lastRow)
     Set rngVolume = ws.Range("AS3:AS" & lastRow)
 
-    ' «Ø¥ß·s¹Ïªí
+    ' å»ºç«‹æ–°åœ–è¡¨
     Set cht = wsView.ChartObjects.Add(Left:=500, Top:=200, Width:=420, Height:=310)
     cht.Name = chartName
     cht.Chart.ChartType = xlLine
 
-    ' ³]©w¶Â¦â­I´º
+    ' è¨­å®šé»‘è‰²èƒŒæ™¯
     With cht.Chart.ChartArea
         .Format.Fill.ForeColor.RGB = RGB(0, 0, 0)
     End With
 
-    ' ³]©w¦¨¥æ»ù®æ½u
+    ' è¨­å®šæˆäº¤åƒ¹æ ¼ç·š
     With cht.Chart
         .SeriesCollection.NewSeries
         .SeriesCollection(1).XValues = rngTime
         .SeriesCollection(1).Values = rngPrice
-        .SeriesCollection(1).Name = "¦¨¥æ»ù"
+        .SeriesCollection(1).Name = "æˆäº¤åƒ¹"
         .SeriesCollection(1).Format.Line.ForeColor.RGB = RGB(0, 255, 255)
         .SeriesCollection(1).Format.Line.Weight = 0.75
         .SeriesCollection(1).Smooth = False
@@ -501,18 +503,18 @@ Sub CreateJiangBoChart(NowTime As Long)
         .PlotArea.Format.Fill.ForeColor.RGB = RGB(64, 64, 64)
     End With
 
-    ' ³]©w¦¨¥æ¶q¬Wª¬¹Ï
+    ' è¨­å®šæˆäº¤é‡æŸ±ç‹€åœ–
     With cht.Chart
         .SeriesCollection.NewSeries
         .SeriesCollection(2).XValues = rngTime
         .SeriesCollection(2).Values = rngVolume
-        .SeriesCollection(2).Name = "¦¨¥æ¶q"
+        .SeriesCollection(2).Name = "æˆäº¤é‡"
         .SeriesCollection(2).ChartType = xlColumnClustered
         .SeriesCollection(2).AxisGroup = xlSecondary
         .SeriesCollection(2).Format.Fill.ForeColor.RGB = RGB(255, 204, 0)
     End With
 
-    ' ³]©w¦¨¥æ¶q Y ¶b
+    ' è¨­å®šæˆäº¤é‡ Y è»¸
     With cht.Chart.Axes(xlValue, xlSecondary)
         .MinimumScale = 0
         .MaximumScale = maxVol
@@ -520,7 +522,7 @@ Sub CreateJiangBoChart(NowTime As Long)
         .TickLabels.Font.Size = 12
     End With
 
-    ' ³]©w X ¶b®æ¦¡
+    ' è¨­å®š X è»¸æ ¼å¼
     With cht.Chart.Axes(xlCategory)
         .HasTitle = False
         .TickLabels.NumberFormat = "[hh]:mm"
@@ -529,16 +531,16 @@ Sub CreateJiangBoChart(NowTime As Long)
         .Format.Line.Visible = msoFalse
     End With
 
-    ' ³]©w¦¨¥æ»ù Y ¶b
+    ' è¨­å®šæˆäº¤åƒ¹ Y è»¸
     With cht.Chart.Axes(xlValue)
         .TickLabels.Font.Color = RGB(255, 255, 255)
         .TickLabels.Font.Size = 12
     End With
 
-    ' ²¾°£¹Ï¨Ò
+    ' ç§»é™¤åœ–ä¾‹
     cht.Chart.Legend.Delete
 
-    ' §R°£ X ¶b¼ĞÅÒ
+    ' åˆªé™¤ X è»¸æ¨™ç±¤
     With cht.Chart.Axes(xlCategory)
         .HasTitle = False
         .TickLabels.Delete
@@ -546,52 +548,52 @@ Sub CreateJiangBoChart(NowTime As Long)
         .MinorTickMark = xlNone
     End With
 
-    ' ±j¨î§ó·sµe­±
+    ' å¼·åˆ¶æ›´æ–°ç•«é¢
     Application.ScreenUpdating = True
     DoEvents
 
 End Sub
-' ³]©w¦¿ªi¹Ï¤§¦¨¥æ¶q®y¼Ğ½d³ò
+' è¨­å®šæ±Ÿæ³¢åœ–ä¹‹æˆäº¤é‡åº§æ¨™ç¯„åœ
 Sub ChangeSecondaryAxisMax()
     Dim ws As Worksheet
     Dim cht As ChartObject
     Dim maxScale As Double
     Dim userInput As String
     
-    ' ³]©w¤u§@ªí
-    Set ws = ThisWorkbook.Sheets("¬İ½L«Ç")
+    ' è¨­å®šå·¥ä½œè¡¨
+    Set ws = ThisWorkbook.Sheets("çœ‹ç›¤å®¤")
     
-    ' ³]©w¹Ïªí
+    ' è¨­å®šåœ–è¡¨
     On Error Resume Next
     Set cht = ws.ChartObjects("JiangBoChart")
     On Error GoTo 0
     
-    ' ½T«O¹Ïªí¦s¦b
+    ' ç¢ºä¿åœ–è¡¨å­˜åœ¨
     If cht Is Nothing Then
-        MsgBox "§ä¤£¨ì¹Ïªí 'JiangBoChart'¡A½Ğ½T»{¦WºÙ¬O§_¥¿½T¡C", vbExclamation
+        MsgBox "æ‰¾ä¸åˆ°åœ–è¡¨ 'JiangBoChart'ï¼Œè«‹ç¢ºèªåç¨±æ˜¯å¦æ­£ç¢ºã€‚", vbExclamation
         Exit Sub
     End If
     
-    ' ¨ú±o¨Ï¥ÎªÌ¿é¤Jªº³Ì¤j­È
-    userInput = InputBox("¿é¤J±ı³]©w" & vbNewLine & "¦¨¥æ¶qªº³Ì¤j­È¡G", "³]©w³Ì¤j­È")
+    ' å–å¾—ä½¿ç”¨è€…è¼¸å…¥çš„æœ€å¤§å€¼
+    userInput = InputBox("è¼¸å…¥æ¬²è¨­å®š" & vbNewLine & "æˆäº¤é‡çš„æœ€å¤§å€¼ï¼š", "è¨­å®šæœ€å¤§å€¼")
     
-    ' ½T«O¿é¤J¬°¼Æ¦r
+    ' ç¢ºä¿è¼¸å…¥ç‚ºæ•¸å­—
     If IsNumeric(userInput) Then
         maxScale = CDbl(userInput)
         
-        ' ³]©w¦¸­n®y¼Ğ¶b³Ì¤j­È
+        ' è¨­å®šæ¬¡è¦åº§æ¨™è»¸æœ€å¤§å€¼
         With cht.Chart.Axes(xlValue, xlSecondary)
             .MaximumScale = maxScale
         End With
         
-        MsgBox "¦¸­n®y¼Ğ¶b³Ì¤j­È¤w³]©w¬° " & maxScale, vbInformation
+        MsgBox "æ¬¡è¦åº§æ¨™è»¸æœ€å¤§å€¼å·²è¨­å®šç‚º " & maxScale, vbInformation
     Else
-        MsgBox "½Ğ¿é¤J¦³®Äªº¼Æ¦r¡C", vbExclamation
+        MsgBox "è«‹è¼¸å…¥æœ‰æ•ˆçš„æ•¸å­—ã€‚", vbExclamation
     End If
 End Sub
 
 
-'±N Sheets("­ì¸ê®Æ") ªº¦¨¥æ¸ê®Æ¶ñ¤J Sheets("§Y®É¦¨¥æ") ¤¤
+'å°‡ Sheets("åŸè³‡æ–™") çš„æˆäº¤è³‡æ–™å¡«å…¥ Sheets("å³æ™‚æˆäº¤") ä¸­
 Sub TransferTradeData()
 
     Dim wsData As Worksheet, wsTrade As Worksheet
@@ -599,53 +601,53 @@ Sub TransferTradeData()
     Dim i As Long
     Dim YesterdayPrice As Double
     
-    ' ³]©w¤u§@ªí
-    Set wsData = ThisWorkbook.Sheets("­ì¸ê®Æ")
-    Set wsTrade = ThisWorkbook.Sheets("§Y®É¦¨¥æ")
+    ' è¨­å®šå·¥ä½œè¡¨
+    Set wsData = ThisWorkbook.Sheets("åŸè³‡æ–™")
+    Set wsTrade = ThisWorkbook.Sheets("å³æ™‚æˆäº¤")
     
-    ' §ä¨ì­ì¸ê®Æ AE Äæ³Ì«á¤@¦C
+    ' æ‰¾åˆ°åŸè³‡æ–™ AE æ¬„æœ€å¾Œä¸€åˆ—
     lastRow = wsData.Cells(wsData.RowS.Count, "AE").End(xlUp).row
-    If lastRow < 3 Then Exit Sub                                  ' ¨S¦³¦¨¥æ¸ê®Æ´NÂ÷¶}
+    If lastRow < 3 Then Exit Sub                                  ' æ²’æœ‰æˆäº¤è³‡æ–™å°±é›¢é–‹
     
-    ' §Y®É¦¨¥æ­¶¸ê®Æ®w°Ï³Ì«á¤@¦C¡]AE3 -> K2¡A©Ò¥H³Ì«á¦C = lastRow - 1¡^
+    ' å³æ™‚æˆäº¤é è³‡æ–™åº«å€æœ€å¾Œä¸€åˆ—ï¼ˆAE3 -> K2ï¼Œæ‰€ä»¥æœ€å¾Œåˆ— = lastRow - 1ï¼‰
     lastTradeRow = lastRow - 1
     If lastTradeRow < 2 Then Exit Sub
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
-    ' (0) ²M°£ÂÂ¸ê®Æ¤º®e¡]«O¯d®æ¦¡¡^
-    wsTrade.Range("K2:P" & wsTrade.RowS.Count).ClearContents       ' ¸ê®Æ®w°Ï K:P
-    wsTrade.Range("A2:F" & wsTrade.RowS.Count).ClearContents       ' Åã¥Ü°Ï A:F
+    ' (0) æ¸…é™¤èˆŠè³‡æ–™å…§å®¹ï¼ˆä¿ç•™æ ¼å¼ï¼‰
+    wsTrade.Range("K2:P" & wsTrade.RowS.Count).ClearContents       ' è³‡æ–™åº«å€ K:P
+    wsTrade.Range("A2:F" & wsTrade.RowS.Count).ClearContents       ' é¡¯ç¤ºå€ A:F
     
-    ' ³]©w­I´º¦â
-    wsTrade.Range("K2:P" & lastTradeRow + 50).Interior.Color = RGB(64, 64, 64) ' ²`¦Ç¦â
-    wsTrade.Range("A2:F" & lastTradeRow + 50).Interior.Color = RGB(64, 64, 64) ' ²`¦Ç¦â
+    ' è¨­å®šèƒŒæ™¯è‰²
+    wsTrade.Range("K2:P" & lastTradeRow + 50).Interior.Color = RGB(64, 64, 64) ' æ·±ç°è‰²
+    wsTrade.Range("A2:F" & lastTradeRow + 50).Interior.Color = RGB(64, 64, 64) ' æ·±ç°è‰²
     
-    ' (1) ±N­ì¸ê®Æ AE:AJ ·h¨ì §Y®É¦¨¥æ K:P
-    wsTrade.Range("K2").Resize(lastRow - 2, 1).Value = wsData.Range("AE3:AE" & lastRow).Value ' ®É¶¡
-    wsTrade.Range("L2").Resize(lastRow - 2, 1).Value = wsData.Range("AH3:AH" & lastRow).Value ' ¦¨¥æ»ù
-    wsTrade.Range("M2").Resize(lastRow - 2, 1).Value = wsData.Range("AJ3:AJ" & lastRow).Value ' ³æ¶q
-    wsTrade.Range("N2").Resize(lastRow - 2, 1).Value = wsData.Range("AI3:AI" & lastRow).Value ' º¦¶^
-    wsTrade.Range("O2").Resize(lastRow - 2, 1).Value = wsData.Range("AF3:AF" & lastRow).Value ' ¶R»ù
-    wsTrade.Range("P2").Resize(lastRow - 2, 1).Value = wsData.Range("AG3:AG" & lastRow).Value ' ½æ»ù
+    ' (1) å°‡åŸè³‡æ–™ AE:AJ æ¬åˆ° å³æ™‚æˆäº¤ K:P
+    wsTrade.Range("K2").Resize(lastRow - 2, 1).Value = wsData.Range("AE3:AE" & lastRow).Value ' æ™‚é–“
+    wsTrade.Range("L2").Resize(lastRow - 2, 1).Value = wsData.Range("AH3:AH" & lastRow).Value ' æˆäº¤åƒ¹
+    wsTrade.Range("M2").Resize(lastRow - 2, 1).Value = wsData.Range("AJ3:AJ" & lastRow).Value ' å–®é‡
+    wsTrade.Range("N2").Resize(lastRow - 2, 1).Value = wsData.Range("AI3:AI" & lastRow).Value ' æ¼²è·Œ
+    wsTrade.Range("O2").Resize(lastRow - 2, 1).Value = wsData.Range("AF3:AF" & lastRow).Value ' è²·åƒ¹
+    wsTrade.Range("P2").Resize(lastRow - 2, 1).Value = wsData.Range("AG3:AG" & lastRow).Value ' è³£åƒ¹
     
-    ' (2) ­pºâ¬Q¦¬ = ³Ì«á¤@µ§¦¨¥æ»ù - ³Ì«á¤@µ§º¦¶^
+    ' (2) è¨ˆç®—æ˜¨æ”¶ = æœ€å¾Œä¸€ç­†æˆäº¤åƒ¹ - æœ€å¾Œä¸€ç­†æ¼²è·Œ
     YesterdayPrice = wsTrade.Cells(lastTradeRow, 12).Value - wsTrade.Cells(lastTradeRow, 14).Value
     
-    ' (3) ³]©w L / O / P Äæ¦rÅéÃC¦â¡]¦¨¥æ»ù / ¶R»ù / ½æ»ù¡^
+    ' (3) è¨­å®š L / O / P æ¬„å­—é«”é¡è‰²ï¼ˆæˆäº¤åƒ¹ / è²·åƒ¹ / è³£åƒ¹ï¼‰
     For i = 2 To lastTradeRow
         
-        ' LÄæ = ¦¨¥æ»ù
+        ' Læ¬„ = æˆäº¤åƒ¹
         If wsTrade.Cells(i, 12).Value > YesterdayPrice Then
-            wsTrade.Cells(i, 12).Font.Color = RGB(255, 0, 0)              ' ¬õ¦â
+            wsTrade.Cells(i, 12).Font.Color = RGB(255, 0, 0)              ' ç´…è‰²
         ElseIf wsTrade.Cells(i, 12).Value < YesterdayPrice Then
-            wsTrade.Cells(i, 12).Font.Color = RGB(0, 176, 80)             ' ºñ¦â
+            wsTrade.Cells(i, 12).Font.Color = RGB(0, 176, 80)             ' ç¶ è‰²
         Else
-            wsTrade.Cells(i, 12).Font.Color = RGB(255, 192, 0)            ' ¶À¦â
+            wsTrade.Cells(i, 12).Font.Color = RGB(255, 192, 0)            ' é»ƒè‰²
         End If
         
-        ' OÄæ = ¶R»ù
+        ' Oæ¬„ = è²·åƒ¹
         If wsTrade.Cells(i, 15).Value > YesterdayPrice Then
             wsTrade.Cells(i, 15).Font.Color = RGB(255, 0, 0)
         ElseIf wsTrade.Cells(i, 15).Value < YesterdayPrice Then
@@ -654,7 +656,7 @@ Sub TransferTradeData()
             wsTrade.Cells(i, 15).Font.Color = RGB(255, 192, 0)
         End If
         
-        ' PÄæ = ½æ»ù
+        ' Pæ¬„ = è³£åƒ¹
         If wsTrade.Cells(i, 16).Value > YesterdayPrice Then
             wsTrade.Cells(i, 16).Font.Color = RGB(255, 0, 0)
         ElseIf wsTrade.Cells(i, 16).Value < YesterdayPrice Then
@@ -665,26 +667,26 @@ Sub TransferTradeData()
         
     Next i
     
-    ' (4) ³]©w M Äæ¡]³æ¶q¡^¦rÅéÃC¦â
+    ' (4) è¨­å®š M æ¬„ï¼ˆå–®é‡ï¼‰å­—é«”é¡è‰²
     For i = 2 To lastTradeRow
         If wsTrade.Cells(i, 12).Value >= wsTrade.Cells(i, 16).Value Then
-            wsTrade.Cells(i, 13).Font.Color = RGB(255, 0, 0)              ' ¥~½L°¾¬õ
+            wsTrade.Cells(i, 13).Font.Color = RGB(255, 0, 0)              ' å¤–ç›¤åç´…
         ElseIf wsTrade.Cells(i, 12).Value <= wsTrade.Cells(i, 15).Value Then
-            wsTrade.Cells(i, 13).Font.Color = RGB(100, 250, 255)          ' ¤º½L°¾ÂÅ
+            wsTrade.Cells(i, 13).Font.Color = RGB(100, 250, 255)          ' å…§ç›¤åè—
         Else
-            wsTrade.Cells(i, 13).Font.Color = RGB(255, 192, 0)            ' ¤¤¶¡¶À¦â
+            wsTrade.Cells(i, 13).Font.Color = RGB(255, 192, 0)            ' ä¸­é–“é»ƒè‰²
         End If
     Next i
     
-    ' (5) K Äæ¡]®É¶¡¡^¦rÅé§ï¶À¦â
+    ' (5) K æ¬„ï¼ˆæ™‚é–“ï¼‰å­—é«”æ”¹é»ƒè‰²
     wsTrade.Range("K2:K" & lastTradeRow).Font.Color = RGB(255, 192, 0)
     
-    ' (6) ¦P¨B A:F ªº§¹¾ã®æ¦¡»P K:P ¬Û¦P¡]¥u°µ¤@¦¸¡^
+    ' (6) åŒæ­¥ A:F çš„å®Œæ•´æ ¼å¼èˆ‡ K:P ç›¸åŒï¼ˆåªåšä¸€æ¬¡ï¼‰
     wsTrade.Range("K2:P" & lastTradeRow).Copy
     wsTrade.Range("A2").PasteSpecial Paste:=xlPasteFormats
     Application.CutCopyMode = False
     
-    ' (7) ¨Ì¥Ø«e¼½©ñ®É¶¡§ó·sÅã¥Ü°Ï A:F
+    ' (7) ä¾ç›®å‰æ’­æ”¾æ™‚é–“æ›´æ–°é¡¯ç¤ºå€ A:F
     
     If runTime Is Nothing Then
         Set runTime = New clsPlayTime
@@ -711,14 +713,14 @@ Sub SetVisibleTradeData(TradeTime As Long)
     Dim dstRange As Range
     Dim visibleCount As Long
 
-    ' ³]©w¤u§@ªí
-    Set wsTrade = ThisWorkbook.Sheets("§Y®É¦¨¥æ")
+    ' è¨­å®šå·¥ä½œè¡¨
+    Set wsTrade = ThisWorkbook.Sheets("å³æ™‚æˆäº¤")
     
-    ' §ä¨ì K Äæ¡]¦¨¥æ®É¶¡¡^ªº³Ì«á¤@µ§¸ê®Æ
+    ' æ‰¾åˆ° K æ¬„ï¼ˆæˆäº¤æ™‚é–“ï¼‰çš„æœ€å¾Œä¸€ç­†è³‡æ–™
     lastRow = wsTrade.Cells(wsTrade.RowS.Count, "K").End(xlUp).row
-    If lastRow < 2 Then Exit Sub                                ' ¨S¦³¸ê®Æ´NÂ÷¶}
+    If lastRow < 2 Then Exit Sub                                ' æ²’æœ‰è³‡æ–™å°±é›¢é–‹
     
-    ' ¦b K2:KlastRow ¤¤§ä <= TradeTime ªº³Ì«á¤@µ§
+    ' åœ¨ K2:KlastRow ä¸­æ‰¾ <= TradeTime çš„æœ€å¾Œä¸€ç­†
     On Error Resume Next
     Set rng = wsTrade.Range("K2:K" & lastRow)
     visibleRow = Application.WorksheetFunction.Match(TradeTime, rng, 1) + 1
@@ -727,37 +729,37 @@ Sub SetVisibleTradeData(TradeTime As Long)
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
-    ' ¥ı²MªÅÅã¥Ü°Ï
+    ' å…ˆæ¸…ç©ºé¡¯ç¤ºå€
     wsTrade.Range("A2:F" & lastRow).ClearContents
     
-    ' ­Y§ä¤£¨ì²Å¦X±ø¥óªº¦C¡Aª½±µÂ÷¶}¡]µe­±«O«ùªÅ¥Õ¡^
+    ' è‹¥æ‰¾ä¸åˆ°ç¬¦åˆæ¢ä»¶çš„åˆ—ï¼Œç›´æ¥é›¢é–‹ï¼ˆç•«é¢ä¿æŒç©ºç™½ï¼‰
     If visibleRow < 2 Then GoTo SafeExit
     
-    ' ­pºâ­nÅã¥Üªº¸ê®Æµ§¼Æ
-    visibleCount = visibleRow - 1                               ' ¦]¬°¸ê®Æ±q²Ä2¦C¶}©l
+    ' è¨ˆç®—è¦é¡¯ç¤ºçš„è³‡æ–™ç­†æ•¸
+    visibleCount = visibleRow - 1                               ' å› ç‚ºè³‡æ–™å¾ç¬¬2åˆ—é–‹å§‹
     
-    ' ¨Ó·½½d³ò K:P ¡÷ ¥Ø¼Ğ½d³ò A:F
+    ' ä¾†æºç¯„åœ K:P â†’ ç›®æ¨™ç¯„åœ A:F
     Set srcRange = wsTrade.Range("K2:P" & visibleRow)
     Set dstRange = wsTrade.Range("A2").Resize(visibleCount, 6)
     
-    ' ª½±µ·h­È¡]¤ñ Copy/Paste §Ö«Ü¦h¡^
+    ' ç›´æ¥æ¬å€¼ï¼ˆæ¯” Copy/Paste å¿«å¾ˆå¤šï¼‰
     dstRange.Value = srcRange.Value
     
     
-    ' ¥ı§âµJÂI²¾¨ì§Y®É¦¨¥æµøµ¡¡AÁ×§K±²¿ùµøµ¡
+    ' å…ˆæŠŠç„¦é»ç§»åˆ°å³æ™‚æˆäº¤è¦–çª—ï¼Œé¿å…æ²éŒ¯è¦–çª—
     wsTrade.Activate
     wsTrade.Range("A" & visibleRow).Select
     
-    ' ±²°Ê¨ì³Ì·s¥i¨£¦æ
+    ' æ²å‹•åˆ°æœ€æ–°å¯è¦‹è¡Œ
     If visibleRow > 38 Then
         Windows(2).ScrollRow = visibleRow - 35
     Else
         Windows(2).ScrollRow = 2
     End If
 
-    ' ¦A§âµJÂIÁÙµ¹¬İ½L«Ç±±¨î°Ï
-    ThisWorkbook.Sheets("¬İ½L«Ç").Activate
-    ThisWorkbook.Sheets("¬İ½L«Ç").Range("E30").Select
+    ' å†æŠŠç„¦é»é‚„çµ¦çœ‹ç›¤å®¤æ§åˆ¶å€
+    ThisWorkbook.Sheets("çœ‹ç›¤å®¤").Activate
+    ThisWorkbook.Sheets("çœ‹ç›¤å®¤").Range("E30").Select
         Application.EnableEvents = True
         Application.ScreenUpdating = True
         
@@ -770,10 +772,10 @@ SafeExit:
 End Sub
 Public Sub PlayTime_TimeChanged(ByVal NewTime As Long)
 
-    ' §ó·sÀx¦s®æ¸ê®Æ
+    ' æ›´æ–°å„²å­˜æ ¼è³‡æ–™
     Call UpdateDisplay
     
-    ' ¥H¤U³v¨B¥´¶}
+    ' ä»¥ä¸‹é€æ­¥æ‰“é–‹
     Call CreateOrUpdateChart
     Call CreateJiangBoChart(NewTime)
     Call SetVisibleTradeData(NewTime)
