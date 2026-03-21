@@ -1,56 +1,56 @@
-Attribute VB_Name = "¤½¥Îµ{§Ç"
+Attribute VB_Name = "å…¬ç”¨ç¨‹åº"
 Public startRow As Long, endRow As Long, lastRow As Long
 Public nextUpdateTime  As Date
 
-Sub ¦w±Æµøµ¡()
+Sub å®‰æ’è¦–çª—()
     Dim appWidth As Double
     Dim appHeight As Double
     Dim leftWidth As Double
     Dim rightWidth As Double
     Dim windowHeight As Double
 
-    ' Àò¨ú Excel µøµ¡ªº¼e«×©M°ª«×
+    ' ç²å– Excel è¦–çª—çš„å¯¬åº¦å’Œé«˜åº¦
     appWidth = Application.Width
     appHeight = Application.Height
 
-    ' ­pºâ¥ªÃä©M¥kÃäªº¼e«×¡A¥H¤Îµøµ¡°ª«×
+    ' è¨ˆç®—å·¦é‚Šå’Œå³é‚Šçš„å¯¬åº¦ï¼Œä»¥åŠè¦–çª—é«˜åº¦
     leftWidth = appWidth * 0.25
     rightWidth = appWidth * 0.75
     windowHeight = appHeight * 0.9
 
-    ' ­Y¦³Windows("Book1")Ãö³¬¤§
+    ' è‹¥æœ‰Windows("Book1")é—œé–‰ä¹‹
     On Error Resume Next
     If Not Application.Windows("Book1") Is Nothing Then
         Application.Windows("Book1").Close
     End If
 
-    ' ½T«O¤w¶}±Ò¨â­Óµøµ¡
+    ' ç¢ºä¿å·²é–‹å•Ÿå…©å€‹è¦–çª—
     If Windows.Count < 2 Then
         ActiveWindow.NewWindow
     End If
 
-    ' ³]¸m¥ªÃäªºµøµ¡ (:1)
+    ' è¨­ç½®å·¦é‚Šçš„è¦–çª— (:1)
     With Windows(1)
-        .WindowState = xlNormal ' ³]¸m¬°«D³Ì¤j¤Æ
+        .WindowState = xlNormal ' è¨­ç½®ç‚ºéæœ€å¤§åŒ–
         .Top = 0
         .Left = 0
         .Width = leftWidth
         .Height = windowHeight
         .Activate
-        Sheets("§Y®É¦¨¥æ").Select
+        Sheets("å³æ™‚æˆäº¤").Select
         Range("A2").Select
         .FreezePanes = True
     End With
 
-    ' ³]¸m¥kÃäªºµøµ¡ (:2)
+    ' è¨­ç½®å³é‚Šçš„è¦–çª— (:2)
     With Windows(2)
-        .WindowState = xlNormal ' ³]¸m¬°«D³Ì¤j¤Æ
+        .WindowState = xlNormal ' è¨­ç½®ç‚ºéæœ€å¤§åŒ–
         .Top = 0
         .Left = leftWidth
         .Width = rightWidth
         .Height = windowHeight
         .Activate
-        Sheets("¬İ½L«Ç").Select
+        Sheets("çœ‹ç›¤å®¤").Select
         Cells(1, 1).Select
     End With
 End Sub
@@ -58,50 +58,52 @@ End Sub
 Sub ReFreshScreen()
     Application.ScreenUpdating = False
     Application.ScreenUpdating = True
-    DoEvents ' ¥ß§Y§ó·sµe­±
+    DoEvents ' ç«‹å³æ›´æ–°ç•«é¢
 End Sub
 
 Sub ToKeyMode()
 
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("¬İ½L«Ç")
+    Set ws = ThisWorkbook.Sheets("çœ‹ç›¤å®¤")
 
-    ' 1. ¤Á´«¥¬ªLÅÜ¼Æªºª¬ºA (True ÅÜ False¡AFalse ÅÜ True)
+    ' 1. åˆ‡æ›å¸ƒæ—è®Šæ•¸çš„ç‹€æ…‹ (True è®Š Falseï¼ŒFalse è®Š True)
     KeyModeOnOff = Not KeyModeOnOff
     
-    ' 2. ®Ú¾Ú²{¦bªºª¬ºA¡A¨M©w±µ¤WÁÙ¬O¤ÁÂ_¼öÁä¯«¸g
+    ' 2. æ ¹æ“šç¾åœ¨çš„ç‹€æ…‹ï¼Œæ±ºå®šæ¥ä¸Šé‚„æ˜¯åˆ‡æ–·ç†±éµç¥ç¶“
     If KeyModeOnOff = True Then
-        ' ?? ±Ò¥Î¼Ò¦¡¡G¸j©w¼öÁä¨ì«ü©wªº¥¨¶°
+        ' ?? å•Ÿç”¨æ¨¡å¼ï¼šç¶å®šç†±éµåˆ°æŒ‡å®šçš„å·¨é›†
         Application.OnKey "%{Left}", "Backward"
         Application.OnKey "%{Right}", "Forward"
-        ws.Cells(29, 5).Value = "¼öÁäON"
-        
+        Application.EnableEvents = False
+        ws.Cells(29, 5).Value = "ç†±éµON"
+        Application.EnableEvents = True
     Else
-        ' ?? °±¥Î¼Ò¦¡¡G¬Ù²¤²Ä¤G­Ó°Ñ¼Æ¡A§â¼öÁä±±¨îÅvÁÙµ¹ Excel ¹w³]¥\¯à
+        ' ?? åœç”¨æ¨¡å¼ï¼šçœç•¥ç¬¬äºŒå€‹åƒæ•¸ï¼ŒæŠŠç†±éµæ§åˆ¶æ¬Šé‚„çµ¦ Excel é è¨­åŠŸèƒ½
         Application.OnKey "%{Left}", ""
         Application.OnKey "%{Right}", ""
-        ws.Cells(29, 5).Value = "¼öÁäOFF"
-        
+        Application.EnableEvents = False
+        ws.Cells(29, 5).Value = "ç†±éµOFF"
+        Application.EnableEvents = True
     End If
     ActiveCell.Select
 End Sub
 
 
 Private Sub cmdForward_Click()
-    Call ¥æ©ö®i¥Ü.cmdForward_Click
+    Call äº¤æ˜“å±•ç¤º.cmdForward_Click
 End Sub
 
 Private Sub cmdBackward_Click()
-    Call ¥æ©ö®i¥Ü.cmdBackward_Click
+    Call äº¤æ˜“å±•ç¤º.cmdBackward_Click
 End Sub
 
-'ªì©l¤Æ¦U¼s°ìÅÜ¼Æ ¨Ã©w¸q§Ö³tÁä¥\¯à
+'åˆå§‹åŒ–å„å»£åŸŸè®Šæ•¸ ä¸¦å®šç¾©å¿«é€ŸéµåŠŸèƒ½
 Sub InitializeVariable()
 
     Set runTime = New clsPlayTime
-    runTime.Time = Sheets("¬İ½L«Ç").Range("E31").Value
+    runTime.Time = Sheets("çœ‹ç›¤å®¤").Range("E31").Value
     
-    OneStep = Sheets("¬İ½L«Ç").Range("OneStep").Value
+    OneStep = Sheets("çœ‹ç›¤å®¤").Range("OneStep").Value
     
     ToKeyMode
 
@@ -110,13 +112,13 @@ End Sub
 
 Public Sub Test_RunTime_UpdateDisplay()
 
-    ' ­Y runTime ©|¥¼«Ø¥ß¡A¥ı«Ø¥ß¨Ã±¾±µ¨Æ¥ó
+    ' è‹¥ runTime å°šæœªå»ºç«‹ï¼Œå…ˆå»ºç«‹ä¸¦æ›æ¥äº‹ä»¶
     If runTime Is Nothing Then
         Set runTime = New clsPlayTime
         ThisWorkbook.HookRunTime
     End If
 
-    ' «ü©w´ú¸Õ®É¶¡¡]¨Ò¡G09:00:14¡^
+    ' æŒ‡å®šæ¸¬è©¦æ™‚é–“ï¼ˆä¾‹ï¼š09:00:14ï¼‰
     runTime.Time = 90014
 
 End Sub
